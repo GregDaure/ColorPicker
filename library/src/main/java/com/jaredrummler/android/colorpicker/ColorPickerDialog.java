@@ -307,15 +307,14 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
 
     contentView.setOnTouchListener(this);
     colorPicker.setOnColorChangedListener(this);
-    hexEditText.setImeActionLabel("Done", KeyEvent.KEYCODE_ENTER);
     hexEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
       @Override
       public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
-        if (actionId == EditorInfo.IME_NULL
-                && event.getAction() == KeyEvent.ACTION_DOWN) {
-          textView.setInputType(0);
-          InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-          imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+        if (actionId == EditorInfo.IME_ACTION_GO) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+            colorPickerDialogListener.onColorSelected(dialogId, color);
+            dismiss();
         }
         return true;
       }
