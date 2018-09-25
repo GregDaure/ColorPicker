@@ -76,7 +76,7 @@
             android:focusable="true"
             android:imeOptions="actionGo"
             android:singleLine="true"
-            android:inputType="text"
+            android:inputType="textNoSuggestions"
             android:maxLength="8"
             android:maxLines="1"
             android:typeface="monospace"/>
