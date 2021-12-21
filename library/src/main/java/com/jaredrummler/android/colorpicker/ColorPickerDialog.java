@@ -81,7 +81,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
   private static final String ARG_PRESETS_BUTTON_TEXT = "presetsButtonText";
   private static final String ARG_CUSTOM_BUTTON_TEXT = "customButtonText";
   private static final String ARG_SELECTED_BUTTON_TEXT = "selectedButtonText";
-
+  private static final String REGEX = "[^0-9^a-fA-F]";
   public static final int TYPE_CUSTOM = 0;
   public static final int TYPE_PRESETS = 1;
 
@@ -370,7 +370,12 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
 
   @Override public void afterTextChanged(Editable s) {
     if (hexEditText.isFocused()) {
-      int color = parseColorString(s.toString());
+      String colorString = s.toString();
+      if(colorString.matches(REGEX)){
+        hexEditText.setText(colorString.replaceAll(REGEX, ""));
+        return;
+      }
+      int color = parseColorString(colorString);
       if (color != colorPicker.getColor()) {
         fromEditText = true;
         colorPicker.setColor(color, true);
